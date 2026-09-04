@@ -300,7 +300,7 @@ export default class PanelIndicator {
         }
 
         this._buttonSignal = this._panelButton.connect(
-            "button-release-event",
+            "button-press-event",
             (_, event) => this._handleButtonEvent(event)
         );
     }

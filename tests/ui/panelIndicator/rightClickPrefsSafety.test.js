@@ -50,7 +50,7 @@ describe('PanelIndicator – right-click prefs safety', () => {
 
         g.Clutter.BUTTON_SECONDARY = 3;
 
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 3,
         });
 

@@ -131,7 +131,7 @@ export default class DockIndicator {
         }
 
         this._buttonSignal = this._dockButton.connect(
-            'button-release-event',
+            'button-press-event',
             (_, event) => this._handleButtonEvent(event)
         );
     }
@@ -312,22 +312,16 @@ export default class DockIndicator {
             this._buttonSignal = null;
         }
 
-        if (this._parentContainer && this._dockButton.get_parent() === this._parentContainer) {
-            this._parentContainer.remove_child(this._dockButton);
         try {
             if (this._parentContainer && this._dockButton.get_parent() === this._parentContainer) {
                 this._parentContainer.remove_child(this._dockButton);
             }
             this._dockButton.destroy();
-        } catch (e) {
-            // Ignore already disposed errors
-        }
+        } catch (e) {}
 
-        this._dockButton.destroy();
         this._dockButton = null;
         this._dockIcon = null;
         this._dockBadge = null;
         this._parentContainer = null;
     }
 }
-

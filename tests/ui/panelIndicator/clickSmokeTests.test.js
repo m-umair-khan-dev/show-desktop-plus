@@ -59,7 +59,7 @@ describe('PanelIndicator mouse click events', () => {
     });
 
     it('left-click triggers toggleDesktop()', () => {
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 1,
         });
 
@@ -67,7 +67,7 @@ describe('PanelIndicator mouse click events', () => {
     });
 
     it('middle-click triggers hideAllWindows()', () => {
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 2,
         });
 
@@ -81,7 +81,7 @@ describe('PanelIndicator mouse click events', () => {
 
         indicator._findPrefsWindow = vi.fn(() => undefined);
 
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 3,
         });
 

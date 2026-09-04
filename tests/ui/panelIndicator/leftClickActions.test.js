@@ -15,7 +15,7 @@ describe('PanelIndicator – left‑click behavior', () => {
         const OriginalButton = g.PanelMenu.Button;
         g.PanelMenu.Button = vi.fn(function () {
             this.connect = vi.fn((signal, handler) => {
-                if (signal === 'button-release-event') clickHandler = handler;
+                if (signal === 'button-press-event') clickHandler = handler;
                 return 1;
             });
             this.add_child = vi.fn();

@@ -35,6 +35,12 @@ export default class HoverActionHandler {
             this._onHoverChanged(actor);
         }));
 
+        // Intercept clicks early to commit peeks before hover is lost
+        signals.push(actor.connect('button-press-event', () => {
+            this.handleClick();
+            return false; // Clutter.EVENT_PROPAGATE
+        }));
+
         this._trackedActors.set(actor, signals);
     }
 
@@ -99,6 +105,19 @@ export default class HoverActionHandler {
 
         if (this._windowManager?.isPeeking) {
             this._windowManager.cancelPeek();
+            // Delay cancel slightly to allow a click to commit the peek
+            // before the windows are unintentionally restored.
+            this._leaveTimeoutId = this._GLib.timeout_add(
+                this._GLib.PRIORITY_DEFAULT,
+                150,
+                () => {
+                    this._leaveTimeoutId = 0;
+                    if (this._windowManager?.isPeeking) {
+                        this._windowManager.cancelPeek();
+                    }
+                    return false;
+                }
+            );
         }
     }
 
@@ -147,6 +166,10 @@ export default class HoverActionHandler {
         if (this._hoverTimeoutId) {
             this._GLib.source_remove(this._hoverTimeoutId);
             this._hoverTimeoutId = 0;
+        }
+        if (this._leaveTimeoutId) {
+            this._GLib.source_remove(this._leaveTimeoutId);
+            this._leaveTimeoutId = 0;
         }
     }
 

@@ -75,7 +75,7 @@ describe('DockIndicator', () => {
     test('primary click triggers left-click-action (toggleDesktop)', () => {
         indicator.attachToContainer(container);
 
-        const handler = indicator._dockButton._signals['button-release-event'];
+        const handler = indicator._dockButton._signals['button-press-event'];
         expect(handler).toBeTruthy();
 
         const event = {
@@ -102,7 +102,7 @@ describe('DockIndicator', () => {
         );
         indicatorWithHover.attachToContainer(container);
 
-        const handler = indicatorWithHover._dockButton._signals['button-release-event'];
+        const handler = indicatorWithHover._dockButton._signals['button-press-event'];
         const event = {
             get_button: () => gnomeUI.Clutter.BUTTON_PRIMARY,
         };
@@ -116,7 +116,7 @@ describe('DockIndicator', () => {
     test('middle click triggers middle-click-action (hideAllWindows)', () => {
         indicator.attachToContainer(container);
 
-        const handler = indicator._dockButton._signals['button-release-event'];
+        const handler = indicator._dockButton._signals['button-press-event'];
         const event = {
             get_button: () => gnomeUI.Clutter.BUTTON_MIDDLE,
         };
@@ -129,7 +129,7 @@ describe('DockIndicator', () => {
     test('secondary click opens preferences window', () => {
         indicator.attachToContainer(container);
 
-        const handler = indicator._dockButton._signals['button-release-event'];
+        const handler = indicator._dockButton._signals['button-press-event'];
         const event = {
             get_button: () => gnomeUI.Clutter.BUTTON_SECONDARY,
         };

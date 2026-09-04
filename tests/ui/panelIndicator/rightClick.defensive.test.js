@@ -7,7 +7,7 @@ describe('PanelIndicator – right-click defensive behavior', () => {
 
     function simulateRightClick() {
         const event = { get_button: () => 3 };
-        indicator._panelButton.emit('button-release-event', event);
+        indicator._panelButton.emit('button-press-event', event);
     }
 
     beforeEach(() => {

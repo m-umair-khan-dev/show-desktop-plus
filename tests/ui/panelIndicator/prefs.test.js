@@ -55,7 +55,7 @@ describe('PanelIndicator preferences window behavior', () => {
         // keep SAME style (replace function, not mockReturnValue)
         g.display.get_tab_list = vi.fn(() => []);
 
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 3,
         });
 
@@ -75,7 +75,7 @@ describe('PanelIndicator preferences window behavior', () => {
 
         g.set_window_actors([{ meta_window: prefsWin }]);
 
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 3,
         });
 
@@ -103,7 +103,7 @@ describe('PanelIndicator preferences window behavior', () => {
 
         indicator._prefsOpenedByExtension = true;
 
-        indicator._panelButton.emit('button-release-event', {
+        indicator._panelButton.emit('button-press-event', {
             get_button: () => 3,
         });
 

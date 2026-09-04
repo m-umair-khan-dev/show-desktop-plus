@@ -127,10 +127,11 @@ describe('HoverActionHandler', () => {
         actor.hover = false;
         actor._signals['notify::hover']();
 
+        gnomeUI._fireTimeout(); // 150ms delay
+
         expect(windowManager.cancelPeek).toHaveBeenCalledTimes(1);
     });
 
-    test('handleClick() commits peek and cancels timeout', () => {
     test('handleClick() commits peek, cancels timeout, and returns true if peeking', () => {
         handler.attach(actor);
 
@@ -140,7 +141,6 @@ describe('HoverActionHandler', () => {
 
         expect(windowManager.isPeeking).toBe(true);
 
-        handler.handleClick();
         const committed = handler.handleClick();
 
         expect(committed).toBe(true);
