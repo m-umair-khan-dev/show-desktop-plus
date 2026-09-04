@@ -2,10 +2,28 @@
 <interface>
   <object class="AdwPreferencesGroup" id="panel_group">
     <property name="title" translatable="yes">Panel</property>
+    <property name="title" translatable="yes">Placement</property>
+
+    <child>
+      <object class="AdwComboRow" id="displayLocation_row">
+        <property name="title" translatable="yes">Display location</property>
+        <property name="subtitle" translatable="yes">Where the Show Desktop icon appears</property>
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item>Top panel</item>
+              <item>Ubuntu Dock</item>
+              <item>Both</item>
+            </items>
+          </object>
+        </property>
+      </object>
+    </child>
 
     <child>
       <object class="AdwComboRow" id="panelButtonPosition_row">
         <property name="title" translatable="yes">Button position</property>
+        <property name="title" translatable="yes">Top panel position</property>
         <property name="subtitle" translatable="yes">Where the icon appears in the top bar</property>
         <property name="model">
           <object class="GtkStringList">
@@ -18,6 +36,29 @@
             </items>
           </object>
         </property>
+      </object>
+    </child>
+
+    <child>
+      <object class="AdwComboRow" id="dockPosition_row">
+        <property name="title" translatable="yes">Ubuntu Dock position</property>
+        <property name="subtitle" translatable="yes">Where the icon appears in Ubuntu Dock / Dash-to-Dock</property>
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item>Extreme Left / Top (Start)</item>
+              <item>Extreme Right / Bottom (End)</item>
+            </items>
+          </object>
+        </property>
+      </object>
+    </child>
+
+    <child>
+      <object class="AdwActionRow" id="dockStatus_row">
+        <property name="title" translatable="yes">Dock status</property>
+        <property name="subtitle" translatable="yes">Checking Ubuntu Dock / Dash to Dock status…</property>
+        <property name="visible">true</property>
       </object>
     </child>
 

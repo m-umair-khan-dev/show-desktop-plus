@@ -29,6 +29,23 @@
     <value value="2" nick="computer"/>
   </enum>
 
+  <enum id="org.gnome.shell.extensions.show-desktop-plus.display-location">
+    <value value="0" nick="panel"/>
+    <value value="1" nick="dock"/>
+    <value value="2" nick="both"/>
+  </enum>
+
+  <enum id="org.gnome.shell.extensions.show-desktop-plus.dock-position">
+    <value value="0" nick="extreme-start"/>
+    <value value="1" nick="extreme-end"/>
+  </enum>
+
+  <enum id="org.gnome.shell.extensions.show-desktop-plus.hover-action">
+    <value value="0" nick="none"/>
+    <value value="1" nick="peek"/>
+    <value value="2" nick="toggle"/>
+  </enum>
+
   <schema path="/org/gnome/shell/extensions/show-desktop-plus/"
           id="org.gnome.shell.extensions.show-desktop-plus">
 
@@ -77,7 +94,31 @@
       <default>true</default>
       <summary>Show hidden window count</summary>
       <description>Displays a badge with the number of hidden windows</description>
-   </key>
+    </key>
+
+    <key name="display-location" enum="org.gnome.shell.extensions.show-desktop-plus.display-location">
+      <default>'panel'</default>
+      <summary>Display location</summary>
+      <description>Where to show the Show Desktop icon: Top Panel, Ubuntu Dock, or Both</description>
+    </key>
+
+    <key name="dock-position" enum="org.gnome.shell.extensions.show-desktop-plus.dock-position">
+      <default>'extreme-end'</default>
+      <summary>Position in dock</summary>
+      <description>Where the icon appears in the dock: Extreme Start (Left/Top) or Extreme End (Right/Bottom)</description>
+    </key>
+
+    <key name="hover-action" enum="org.gnome.shell.extensions.show-desktop-plus.hover-action">
+      <default>'none'</default>
+      <summary>Hover action</summary>
+      <description>Action when hovering mouse over the icon: None, Peek at desktop, or Toggle desktop</description>
+    </key>
+
+    <key type="u" name="hover-delay">
+      <default>250</default>
+      <summary>Hover delay</summary>
+      <description>Delay in milliseconds before the hover action triggers</description>
+    </key>
 
   </schema>
 </schemalist>

@@ -37,5 +37,36 @@
       </object>
     </child>
 
+    <child>
+      <object class="AdwComboRow" id="hoverAction_row">
+        <property name="title" translatable="yes">Hover action</property>
+        <property name="subtitle" translatable="yes">What happens when you hover mouse over the icon</property>
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item>None (Click only)</item>
+              <item>Peek at desktop</item>
+              <item>Toggle desktop</item>
+            </items>
+          </object>
+        </property>
+      </object>
+    </child>
+
+    <child>
+      <object class="AdwSpinRow" id="hoverDelay_row">
+        <property name="title" translatable="yes">Hover delay (ms)</property>
+        <property name="subtitle" translatable="yes">Delay before hover action triggers</property>
+        <property name="adjustment">
+          <object class="GtkAdjustment">
+            <property name="lower">100</property>
+            <property name="upper">2000</property>
+            <property name="step-increment">50</property>
+            <property name="page-increment">100</property>
+          </object>
+        </property>
+      </object>
+    </child>
+
   </object>
 </interface>

@@ -132,7 +132,7 @@ describe('ExtensionController lifecycle', () => {
         const wsMgr = loaded.workspace_manager;
 
         expect(wsMgr.connect).toHaveBeenCalledTimes(1);
-        expect(mockExtension._settings.connect).toHaveBeenCalledTimes(4);
+        expect(mockExtension._settings.connect).toHaveBeenCalledTimes(6);
     });
 
      it('disable() unwires everything correctly', async () => {
@@ -158,7 +158,7 @@ describe('ExtensionController lifecycle', () => {
 
         expect(wsMgr.disconnect).toHaveBeenCalledWith(id);
 
-        expect(mockExtension._settings.disconnect).toHaveBeenCalledTimes(4);
+        expect(mockExtension._settings.disconnect).toHaveBeenCalledTimes(6);
         expect(hotkeyMocks.disable).toHaveBeenCalledTimes(1);
         expect(panelMocks.destroy).toHaveBeenCalledTimes(1);
         expect(stateMocks.clear).toHaveBeenCalledTimes(1);

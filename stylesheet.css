@@ -10,3 +10,22 @@
     top: 0px;
     right: 0px;
 }
+
+.show-desktop-dock-button {
+    padding: 6px;
+    border-radius: 8px;
+    transition-duration: 150ms;
+}
+
+.show-desktop-dock-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.show-desktop-dock-button:active {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.show-desktop-dock-icon {
+    color: #dfdfdf;
+}
+

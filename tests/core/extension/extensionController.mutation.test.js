@@ -106,7 +106,7 @@ describe('ExtensionController – mutation‑driven tests', () => {
 
         controller.disable();
 
-        expect(settings.disconnect).toHaveBeenCalledTimes(4);
+        expect(settings.disconnect).toHaveBeenCalledTimes(6);
     });
 
     it('connects all expected settings keys', async () => {
@@ -118,6 +118,8 @@ describe('ExtensionController – mutation‑driven tests', () => {
         expect(calls).toContain('changed::show-hidden-count');
         expect(calls).toContain('changed::current-monitor-only');
         expect(calls).toContain('changed::button-position');
+        expect(calls).toContain('changed::display-location');
+        expect(calls).toContain('changed::dock-position');
     });
     
     it('updates icon when show-hidden-count changes', async () => {

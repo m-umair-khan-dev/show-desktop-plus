@@ -52,3 +52,15 @@ export function bindSwitchRow(settings, key, row) {
     );
 }
 
+/**
+ * Binds an AdwSpinRow to a uint GSettings key.
+ */
+export function bindSpinRow(settings, key, row) {
+    settings.bind(
+        key,
+        row,
+        'value',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+}
+

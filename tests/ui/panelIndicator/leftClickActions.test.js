@@ -95,4 +95,27 @@ describe('PanelIndicator – left‑click behavior', () => {
         expect(mockWindowManager.toggleDesktop).not.toHaveBeenCalled();
         expect(mockWindowManager.addCurrentWindowToHidden).not.toHaveBeenCalled();
     });
+
+    it('left-click: commits peek when peeking and does not toggle/restore windows', () => {
+        const hoverHandler = {
+            attach: vi.fn(),
+            handleClick: vi.fn(() => true),
+        };
+
+        const peekingIndicator = new PanelIndicator(
+            mockWindowManager,
+            {},
+            mockExtension,
+            g,
+            hoverHandler
+        );
+        peekingIndicator._createPanelButton();
+
+        mockExtension._settings.get_enum.mockReturnValue(0); // TOGGLE_DESKTOP
+
+        clickLeft();
+
+        expect(hoverHandler.handleClick).toHaveBeenCalledTimes(1);
+        expect(mockWindowManager.toggleDesktop).not.toHaveBeenCalled();
+    });
 });

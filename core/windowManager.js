@@ -20,6 +20,9 @@ export default class WindowManager {
         this._displaySignals = [];
         this._windowSignals = new Map();
 
+        // Peek state tracking
+        this._isPeeking = false;
+
         // Start listening for window events
         this._connectSignals();
     }
@@ -105,6 +108,9 @@ export default class WindowManager {
      * Ensures all signals are cleaned up.
      */
     disable() {
+        if (this._isPeeking) {
+            this.cancelPeek();
+        }
         this._disconnectDisplaySignals();
         this._disconnectWindowSignals();
     }
@@ -445,11 +451,68 @@ export default class WindowManager {
      *  - restoring all windows
      */
     toggleDesktop() {
+        this._isPeeking = false;
         const wsIndex = this._getActiveWorkspaceIndex();
 
         if (!this._stateStore.getWorkspaceMap(wsIndex))
             this.hideAllWindows();
         else
             this.restoreAllWindows();
+    }
+
+    /**
+     * Whether a temporary desktop peek is currently active.
+     */
+    get isPeeking() {
+        return this._isPeeking;
+    }
+
+    /**
+     * Temporarily shows the desktop by hiding windows.
+     * If desktop is already shown, does nothing.
+     */
+    peekDesktop() {
+        const wsIndex = this._getActiveWorkspaceIndex();
+        if (this._stateStore.getWorkspaceMap(wsIndex))
+            return;
+
+        this.hideAllWindows();
+        this._isPeeking = true;
+        this._peekingWorkspaceIndex = wsIndex;
+    }
+
+    /**
+     * Cancels an active peek, restoring the windows.
+     */
+    cancelPeek() {
+        if (!this._isPeeking)
+            return;
+
+        this._isPeeking = false;
+
+        if (this._peekingWorkspaceIndex !== undefined) {
+            const map = this._stateStore.getWorkspaceMap(this._peekingWorkspaceIndex);
+            if (map) {
+                const last = this._restoreWindowsFromMap(map);
+                if (last)
+                    this._activateWindowSafely(last);
+                this._stateStore.deleteWorkspace(this._peekingWorkspaceIndex);
+                this._hideOverviewIfVisible();
+                this._onStateChanged();
+            }
+            this._peekingWorkspaceIndex = undefined;
+            return;
+        }
+
+        this.restoreAllWindows();
+    }
+
+    /**
+     * Commits the peek state into a permanent show-desktop state
+     * (e.g. if the user clicks while hovering).
+     */
+    commitPeek() {
+        this._isPeeking = false;
+        this._peekingWorkspaceIndex = undefined;
     }
 }

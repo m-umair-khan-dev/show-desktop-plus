@@ -28,6 +28,7 @@ export function createWindow(id, opts = {}) {
         unminimize: vi.fn(function () { this.minimized = false }),
         activate: vi.fn(),
         connect: vi.fn(),
+        disconnect: vi.fn(),
     };
 }
 

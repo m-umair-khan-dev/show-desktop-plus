@@ -19,11 +19,12 @@ const IconStyle = {
 };
 
 export default class PanelIndicator {
-    constructor(windowManager, stateStore, extension, gnomeUI) {
+    constructor(windowManager, stateStore, extension, gnomeUI, hoverHandler = null) {
         // Core dependencies
         this._windowManager = windowManager;
         this._stateStore = stateStore;
         this._extension = extension;
+        this._hoverHandler = hoverHandler;
 
         // GNOME Shell API bindings (injected for testability)
         this._St = gnomeUI.St;
@@ -294,6 +295,10 @@ export default class PanelIndicator {
         this._panelButton.reactive = true;
         this._panelButton.clear_actions();
 
+        if (this._hoverHandler) {
+            this._hoverHandler.attach(this._panelButton);
+        }
+
         this._buttonSignal = this._panelButton.connect(
             "button-release-event",
             (_, event) => this._handleButtonEvent(event)
@@ -301,16 +306,31 @@ export default class PanelIndicator {
     }
 
     _handleButtonEvent(event) {
+        const wasPeeking = this._hoverHandler ? this._hoverHandler.handleClick() : false;
+        this._hoverHandler?.resetCommittedPeek?.();
+
         const button = event.get_button();
 
         switch (button) {
-            case this._Clutter.BUTTON_PRIMARY:
-                this._handleLeftClick(this._extension._settings.get_enum("left-click-action"));
+            case this._Clutter.BUTTON_PRIMARY: {
+                const action = this._extension._settings.get_enum("left-click-action");
+                if (wasPeeking && (action === LeftClickAction.TOGGLE_DESKTOP || action === LeftClickAction.HIDE_ALL)) {
+                    this.updateIcon();
+                    return this._Clutter.EVENT_STOP;
+                }
+                this._handleLeftClick(action);
                 return this._Clutter.EVENT_STOP;
+            }
 
-            case this._Clutter.BUTTON_MIDDLE:
-                this._handleMiddleClick(this._extension._settings.get_enum("middle-click-action"));
+            case this._Clutter.BUTTON_MIDDLE: {
+                const action = this._extension._settings.get_enum("middle-click-action");
+                if (wasPeeking && (action === MiddleClickAction.TOGGLE_DESKTOP || action === MiddleClickAction.HIDE_ALL)) {
+                    this.updateIcon();
+                    return this._Clutter.EVENT_STOP;
+                }
+                this._handleMiddleClick(action);
                 return this._Clutter.EVENT_STOP;
+            }
 
             case this._Clutter.BUTTON_SECONDARY:
                 // Run prefs handler in idle to avoid blocking UI
@@ -346,6 +366,10 @@ export default class PanelIndicator {
 
     destroy() {
         if (!this._panelButton) return;
+
+        if (this._hoverHandler) {
+            this._hoverHandler.detach(this._panelButton);
+        }
 
         if (this._buttonSignal) {
             this._panelButton.disconnect(this._buttonSignal);

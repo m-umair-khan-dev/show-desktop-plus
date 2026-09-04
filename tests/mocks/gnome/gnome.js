@@ -74,6 +74,7 @@ export function createMockGnomeAPI(workspacesOrWindows) {
 
         get_tab_list: vi.fn(() => []),
         get_window_actors: vi.fn(() => []),
+        disconnect: vi.fn(),
     };
 
     // -----------------------------
@@ -132,6 +133,13 @@ export function createMockGnomeAPI(workspacesOrWindows) {
         EVENT_STOP: 1,
         EVENT_PROPAGATE: 2,
 
+        ActorAlign: {
+            FILL: 0,
+            START: 1,
+            CENTER: 2,
+            END: 3,
+        },
+
         ModifierType: {
             SHIFT_MASK: 1 << 0,
             CONTROL_MASK: 1 << 1,
@@ -166,6 +174,24 @@ export function createMockGnomeAPI(workspacesOrWindows) {
 
     const St = {
         Widget,
+        Button: vi.fn(function Button(props = {}) {
+            this._signals = {};
+            this.reactive = props.reactive;
+            this.can_focus = props.can_focus;
+            this.track_hover = props.track_hover;
+            this._child = null;
+
+            this.set_child = vi.fn((child) => {
+                this._child = child;
+            });
+            this.get_parent = vi.fn(() => this._parent || null);
+            this.connect = vi.fn((signal, handler) => {
+                this._signals[signal] = handler;
+                return 1;
+            });
+            this.disconnect = vi.fn();
+            this.destroy = vi.fn();
+        }),
         Icon: vi.fn(function Icon(props = {}) {
             this.icon_name = props.icon_name;
         }),

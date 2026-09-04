@@ -18,6 +18,14 @@ Originally based on the “Show Desktop Applet” extension — now heavily rewr
 
 ## 🚀 Features
 
+- **Flexible Placement:**
+  - Place on the **Top Panel**, **Ubuntu Dock / Dash-to-Dock**, or **Both**.
+  - Dock position supports **Extreme Left / Top (Start)** or **Extreme Right / Bottom (End)**, integrating cleanly with extended panel mode and centered icons.
+  - Graceful fallback to the top panel if Ubuntu Dock is not installed or is disabled.
+- **Hover Actions (Peek & Auto-Toggle):**
+  - **Peek at desktop:** Temporarily reveals the desktop when hovering mouse over the icon; restores open windows automatically when cursor leaves. Clicking while hovering commits the show-desktop state.
+  - **Auto-toggle desktop:** Automatically toggles desktop after a configurable hover delay.
+  - **Hover delay:** Adjustable delay in milliseconds (prevents accidental triggers).
 - **Left‑click:** Toggle show/hide all windows on the current workspace
 - **Middle‑click:**
   - Hide the focused window, **or**
@@ -31,12 +39,15 @@ Originally based on the “Show Desktop Applet” extension — now heavily rewr
 - **Monitor‑aware behavior (optional):**
   - Hide/restore windows only on the active monitor
 - **Dynamic panel icon:**
+- **Dynamic icon & badge:**
   - Icon changes based on hidden state
   - Optional badge shows number of hidden windows
 - **Configurable panel position**
+- **Configurable panel position:** Left-end, Left, Center, Right, Right-end
 - **Optional global hotkey** (overrides GNOME’s built‑in Show Desktop)
 - **Automatic updates on workspace switch**
 - **Fully unit‑tested with Vitest**
+- **Fully unit‑tested with Vitest (174 tests passing)**
 
 ---
 
@@ -44,8 +55,21 @@ Originally based on the “Show Desktop Applet” extension — now heavily rewr
 
 ### Panel
 - `button-position` – button position in the top bar
+### Placement
+- `display-location` – where the icon appears:
+  - `panel` – top panel only
+  - `dock` – Ubuntu Dock / Dash-to-Dock only
+  - `both` – top panel and dock
+- `panel-position` (`button-position`) – button position in the top bar (`left-end`, `left`, `center`, `right`, `right-end`)
+- `dock-position` – button position in Ubuntu Dock (`extreme-start`, `extreme-end`)
 
 ### Controls
+- `hover-action` – what happens when hovering mouse over the icon:
+  - `none` – disabled (click only)
+  - `peek` – peek at desktop while hovered
+  - `toggle` – auto-toggle desktop after delay
+- `hover-delay` – delay in milliseconds before hover action triggers (default `250ms`)
+
 - `left-click-action` – what happens when left-clicking the icon:
   - toggle desktop
   - hide all windows

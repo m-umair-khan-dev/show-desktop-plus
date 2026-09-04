@@ -2,7 +2,7 @@
   "uuid": "show-desktop-plus@attentivecoder",
   "name": "Show Desktop Plus",
   "description": "Enhanced show desktop functionality with per-workspace hiding, monitor awareness, hotkey support, and a dynamic panel indicator.",
-  "version": 1,
+  "version": 99,
   "extension-id": "show-desktop-plus",
   "gettext-domain": "show-desktop-plus",
   "settings-schema": "org.gnome.shell.extensions.show-desktop-plus",
